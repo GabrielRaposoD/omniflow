@@ -1,84 +1,149 @@
-# Turborepo starter
+# OmniFlow - Automated Workflow Orchestration Platform
 
-This Turborepo starter is maintained by the Turborepo core team.
+**OmniFlow** is a sophisticated, multi-tenant SaaS platform designed for building, managing, and automating workflows across various services such as Slack, Email, Webhooks, and more. It provides a user-friendly visual interface, real-time execution tracking, robust integration support, and powerful scheduling capabilities.
 
-## Using this example
+---
 
-Run the following command:
+## 🌟 Key Features
 
-```sh
-npx create-turbo@latest
+- **Visual Workflow Builder:** Drag-and-drop interface for creating automated workflows.
+- **Real-time Monitoring:** Track workflow execution through detailed logs and statuses.
+- **Integrations:** Seamlessly connect with Slack, Email, HTTP APIs, Google Sheets, and GitHub.
+- **Scheduling:** Automated triggers and cron-based scheduling for workflow execution.
+- **Multi-tenancy:** Secure data isolation for multiple tenants.
+- **Advanced Authentication:** JWT-based authentication with OAuth and Role-Based Access Control (RBAC).
+- **Observability:** Comprehensive logging, metrics, and alerting.
+
+---
+
+## 🛠 Tech Stack
+
+**Frontend:**
+
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- React Server Components
+- WebSocket (Socket.IO)
+
+**Backend:**
+
+- NestJS
+- TypeScript
+- PostgreSQL
+- Prisma ORM
+- JWT & OAuth Authentication
+- RESTful APIs
+
+**Infrastructure:**
+
+- Docker & Docker Compose
+- Turborepo
+- pnpm
+- GitHub Actions (CI/CD)
+
+---
+
+## 📂 Project Structure
+
+```bash
+omniflow/
+├── apps/
+│   ├── api/              # NestJS API application
+│   │   ├── src/
+│   │   ├── test/
+│   │   └── Dockerfile
+│   └── web/              # Next.js web application
+│       ├── app/
+│       ├── public/
+│       └── Dockerfile
+├── packages/
+│   ├── api/              # Shared API types and utilities
+│   ├── eslint-config/    # ESLint configurations
+│   ├── jest-config/      # Jest configurations
+│   ├── tsconfig/         # TypeScript configurations
+│   └── ui/               # Shared UI components
+├── docker-compose.yml    # Docker Compose configuration
+└── package.json          # Root package.json
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## 🚀 Getting Started
 
-### Apps and Packages
+### Requirements
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- Docker
+- Node.js (18+)
+- pnpm (9+)
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### Installation
 
-### Utilities
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/omniflow.git
+cd omniflow
 
-This Turborepo has some additional tools already setup for you:
+# Install dependencies
+pnpm install
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+# Start development environment
+docker-compose -f docker-compose.dev.yml up
 
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
+# Or start production environment
+docker-compose up
 ```
 
-### Develop
+The applications will be available at:
 
-To develop all apps and packages, run the following command:
+- Web: http://localhost:3000
+- API: http://localhost:3001
+- Database: localhost:5432
 
-```
-cd my-turborepo
-pnpm dev
-```
+---
 
-### Remote Caching
+## 🔐 Authentication & Security
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+- JWT-based authentication
+- OAuth2 integration (Google, GitHub)
+- RBAC for admin and user-level permissions
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+---
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+## 📦 Deployment
 
-```
-cd my-turborepo
-npx turbo login
-```
+- Docker-based deployment
+- Environment-based configuration
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+---
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+## 📊 Monitoring & Logging
 
-```
-npx turbo link
-```
+---
 
-## Useful Links
+## 🧩 Integrations Supported
 
-Learn more about the power of Turborepo:
+- Slack
+- Email
+- GitHub
+- Google Sheets
+- Webhooks / HTTP APIs
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+---
+
+## 📖 Documentation
+
+- API documentation available with Swagger/OpenAPI
+- Detailed architecture diagrams and additional guidelines included in `/docs`
+
+---
+
+## 🤝 Contributing
+
+Pull requests and suggestions are welcome! Please ensure that your code adheres to the existing style guidelines and include tests where applicable.
+
+---
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: omniflow-api
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/omniflow
+      - NODE_ENV=development
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/packages/api/node_modules
+    networks:
+      - omniflow-network
+
+  web:
+    container_name: omniflow-web
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://api:3000
+      - NODE_ENV=production
+    depends_on:
+      - api
+    networks:
+      - omniflow-network
+
+  db:
+    container_name: omniflow-db
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=omniflow
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - omniflow-network
+
+networks:
+  omniflow-network:
+    driver: bridge
+    external: true
+
+volumes:
+  postgres_data: 
