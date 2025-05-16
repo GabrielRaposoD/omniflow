@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "path": "..",
+      "name": "omniflow",
+    },
+    {
+      "path": "../apps/web",
+      "name": "web",
+    },
+    {
+      "path": "../apps/api",
+      "name": "api",
+    },
+  ],
+  "settings": {},
+}

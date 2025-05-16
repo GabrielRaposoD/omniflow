@@ -3,5 +3,8 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "jest.jestCommandLine": "pnpm test",
+  "jest.rootPath": "",
+  "jest.projects": ["apps/api", "apps/web"]
 }

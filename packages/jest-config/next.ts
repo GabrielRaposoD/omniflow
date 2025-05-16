@@ -8,7 +8,7 @@ const createJestConfig = nextJest({
   dir: './',
 });
 
-const config = {
+const config: ConfigNamespace.InitialOptions = {
   ...baseConfig,
   moduleFileExtensions: [...baseConfig.moduleFileExtensions, 'jsx', 'tsx'],
 } as const satisfies Config;

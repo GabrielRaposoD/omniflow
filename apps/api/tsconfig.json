@@ -7,5 +7,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "eslint.config.mjs"]
+  "include": ["src/**/*", "eslint.config.mjs", "jest.config.ts"]
 }
