@@ -2,6 +2,13 @@ import { Test, type TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { UsersService } from '@/users/users.service';
+
+jest.mock('bcrypt', () => ({
+  compare: jest.fn(
+    async (pw, hash) => pw === 'password' && hash === 'hashedpw',
+  ),
+}));
 
 const mockUser = {
   id: 'user-id',
@@ -17,16 +24,11 @@ describe('AuthService', () => {
   beforeEach(async () => {
     usersService = { findOne: jest.fn() };
     jwtService = { sign: jest.fn() };
-    jest
-      .spyOn(bcrypt, 'compare')
-      .mockImplementation(
-        async (pw, hash) => pw === 'password' && hash === 'hashedpw',
-      );
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        { provide: 'UsersService', useValue: usersService },
+        { provide: UsersService, useValue: usersService },
         { provide: JwtService, useValue: jwtService },
       ],
     })
@@ -37,10 +39,6 @@ describe('AuthService', () => {
       .compile();
 
     service = module.get<AuthService>(AuthService);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
   });
 
   it('should be defined', () => {
@@ -65,7 +63,7 @@ describe('AuthService', () => {
 
     it('should return null if password does not match', async () => {
       usersService.findOne.mockResolvedValue(mockUser);
-      jest.spyOn(bcrypt, 'compare').mockResolvedValue(false);
+      (bcrypt.compare as jest.Mock).mockResolvedValueOnce(false);
       const result = await service.validateUser(
         'test@example.com',
         'wrongpassword',
