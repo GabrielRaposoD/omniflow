@@ -1,13 +1,9 @@
-
-import styles from "./page.module.css";
-
-
+import { Button } from "@repo/ui/components/button";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-     
-  
-    </div>
-  );
+	return (
+		<div>
+			<Button>Click me</Button>
+		</div>
+	);
 }

@@ -1,1 +1,3 @@
-export { default } from '@repo/ui/postcss.config';
+import { postcssConfig } from '@repo/tailwind-config/postcss';
+
+export default postcssConfig;

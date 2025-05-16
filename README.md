@@ -20,7 +20,7 @@
 
 **Frontend:**
 
-- Next.js 14
+- Next.js 15
 - TypeScript
 - Tailwind CSS
 - React Server Components
