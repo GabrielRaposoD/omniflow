@@ -11,4 +11,7 @@ export const config = {
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+  },
 } as const satisfies Config;
