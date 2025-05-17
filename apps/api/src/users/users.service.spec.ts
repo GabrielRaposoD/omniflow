@@ -38,16 +38,18 @@ describe('UsersService', () => {
         id: '1',
         email: 'a',
         passwordHash: 'hashed-pw',
+        name: 'b',
       });
-      const dto = { email: 'a', password: 'pw' } as CreateUserDto;
+      const dto = { email: 'a', name: 'b', password: 'pw' } as CreateUserDto;
       const result = await service.create(dto);
       expect(bcrypt.hash).toHaveBeenCalledWith('pw', 10);
       expect(prisma.user.create).toHaveBeenCalledWith({
-        data: { ...dto, passwordHash: 'hashed-pw' },
+        data: { email: 'a', name: 'b', passwordHash: 'hashed-pw' },
       });
-      expect(result).toEqual({
+      expect(result.user).toEqual({
         id: '1',
         email: 'a',
+        name: 'b',
         passwordHash: 'hashed-pw',
       });
     });
@@ -56,9 +58,9 @@ describe('UsersService', () => {
   describe('findOne', () => {
     it('should return user if found', async () => {
       prisma.user.findUnique.mockResolvedValue({ id: '1', email: 'a' });
-      const result = await service.findOne('1');
+      const result = await service.findOne('a');
       expect(prisma.user.findUnique).toHaveBeenCalledWith({
-        where: { id: '1' },
+        where: { email: 'a' },
       });
       expect(result).toEqual({ id: '1', email: 'a' });
     });
