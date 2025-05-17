@@ -34,13 +34,16 @@ describe('AuthController', () => {
     it('should return a token for valid user', async () => {
       const req = { user: mockUser };
       authService.login.mockResolvedValue({ access_token: 'token' });
-      const result = await controller.login(req);
+      const result = await controller.login(req, {
+        email: 'test@example.com',
+        password: 'password',
+      });
       expect(result).toEqual({ access_token: 'token' });
       expect(authService.login).toHaveBeenCalledWith(mockUser);
     });
   });
 
-  describe('register', () => {
+  describe('signup', () => {
     it('should create user and return a token', async () => {
       const dto: CreateUserDto = {
         email: 'test@example.com',
@@ -48,7 +51,7 @@ describe('AuthController', () => {
       } as any;
       usersService.create.mockResolvedValue(mockUser);
       authService.login.mockResolvedValue({ access_token: 'token' });
-      const result = await controller.register(dto);
+      const result = await controller.signup(dto);
       expect(usersService.create).toHaveBeenCalledWith(dto);
       expect(authService.login).toHaveBeenCalledWith(mockUser);
       expect(result).toEqual({ access_token: 'token' });

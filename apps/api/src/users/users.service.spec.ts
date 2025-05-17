@@ -39,7 +39,7 @@ describe('UsersService', () => {
         email: 'a',
         passwordHash: 'hashed-pw',
       });
-      const dto = { email: 'a', passwordHash: 'pw' } as CreateUserDto;
+      const dto = { email: 'a', password: 'pw' } as CreateUserDto;
       const result = await service.create(dto);
       expect(bcrypt.hash).toHaveBeenCalledWith('pw', 10);
       expect(prisma.user.create).toHaveBeenCalledWith({

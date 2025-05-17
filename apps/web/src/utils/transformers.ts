@@ -1,4 +1,4 @@
-import superjson from 'superjson';
+import superjson from "superjson";
 
 interface DataTransformer {
   serialize: (object: FormData | Record<string, unknown>) => FormData;
@@ -8,7 +8,7 @@ interface DataTransformer {
 export class FormDataTransformer implements DataTransformer {
   serialize(object: FormData | Record<string, unknown>): FormData {
     if (!(object instanceof FormData)) {
-      throw new Error('Expected FormData');
+      throw new Error("Expected FormData");
     }
 
     return object;

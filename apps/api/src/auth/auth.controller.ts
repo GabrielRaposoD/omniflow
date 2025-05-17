@@ -11,8 +11,11 @@ import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { AuthService } from './auth.service';
 import { UsersService } from '@/users/users.service';
-import { CreateUserDto } from '@repo/api';
+import { CreateUserDto, LoginDto } from '@repo/api';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { LoginReturn } from '@repo/api';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -20,28 +23,48 @@ export class AuthController {
     private userService: UsersService,
   ) {}
 
-  /* Login user */
+  /**
+   * Login a user
+   *
+   * @remarks This operation allows you to login a user.
+   *
+   * @throws {200} Login successful.
+   */
+  @ApiResponse({ type: LoginReturn })
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
+  async login(@Request() req, @Body() _userData: LoginDto) {
     const token = await this.authService.login(req.user);
 
     return token;
   }
 
-  /* Register user */
+  /**
+   * Create a new user
+   *
+   * @remarks This operation allows you to create a new user.
+   * @throws {201} Created.
+   * @throws {409} User already exists.
+   */
   @Public()
-  @Post('register')
-  async register(@Body() userData: CreateUserDto) {
+  @Post('signup')
+  async signup(@Body() userData: CreateUserDto) {
     const user = await this.userService.create(userData);
 
     const token = await this.authService.login(user);
 
+    console.log(token);
+
     return token;
   }
 
-  /* Get user profile */
-
+  /**
+   * Get the profile of the current user
+   *
+   * @remarks This operation allows you to get the profile of the current user.
+   * @type {User}
+   * @throws {200} User found.
+   */
   @UseGuards(JwtAuthGuard)
   @Get('me')
   async getProfile(@Request() req) {
