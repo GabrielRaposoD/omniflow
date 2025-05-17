@@ -1,13 +1,13 @@
-import type { Prisma } from "@repo/database";
-import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
-import { ApiProperty } from "@nestjs/swagger";
+import type { Prisma } from '@repo/database';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto
-  implements Omit<Prisma.UserCreateInput, "passwordHash">
+  implements Omit<Prisma.UserCreateInput, 'passwordHash'>
 {
   @ApiProperty({
-    description: "The email of the user",
-    example: "test@test.com",
+    description: 'The email of the user',
+    example: 'test@test.com',
     required: true,
     type: String,
   })
@@ -15,8 +15,8 @@ export class CreateUserDto
   email: string;
 
   @ApiProperty({
-    description: "The name of the user",
-    example: "John Doe",
+    description: 'The name of the user',
+    example: 'John Doe',
     required: true,
     type: String,
   })
@@ -25,8 +25,8 @@ export class CreateUserDto
   name: string;
 
   @ApiProperty({
-    description: "The password of the user",
-    example: "password",
+    description: 'The password of the user',
+    example: 'password',
     required: true,
     type: String,
     minLength: 8,
@@ -35,4 +35,14 @@ export class CreateUserDto
   @IsNotEmpty()
   @MinLength(8)
   password: string;
+
+  @ApiProperty({
+    description: 'The name of the organization',
+    example: 'Acme',
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @IsNotEmpty()
+  organizationName: string;
 }

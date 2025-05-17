@@ -53,8 +53,6 @@ export class AuthController {
 
     const token = await this.authService.login(user);
 
-    console.log(token);
-
     return token;
   }
 

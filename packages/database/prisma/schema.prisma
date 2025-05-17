@@ -9,13 +9,14 @@ generator client {
 }
 
 model User {
-  id           String           @id @default(uuid())
-  email        String           @unique
-  name         String
-  passwordHash String
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  tenantRoles  UserTenantRole[]
+  id                 String           @id @default(uuid())
+  email              String           @unique
+  name               String
+  passwordHash       String
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  lastActiveTenantId String?
+  tenantRoles        UserTenantRole[]
 }
 
 model Tenant {
@@ -25,6 +26,7 @@ model Tenant {
   users        UserTenantRole[]
   workflows    Workflow[]
   integrations Integration[]
+  invites      Invite[]
 }
 
 model UserTenantRole {
@@ -99,6 +101,18 @@ model Integration {
   config    Json
   createdAt DateTime        @default(now())
   tenant    Tenant          @relation(fields: [tenantId], references: [id])
+}
+
+model Invite {
+  id        String   @id @default(uuid())
+  tenantId  String
+  email     String
+  role      Role
+  token     String   @unique
+  accepted  Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
 }
 
 enum IntegrationType {

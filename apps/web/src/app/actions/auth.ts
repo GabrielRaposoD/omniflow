@@ -19,6 +19,7 @@ export async function signup(
     name: formData.get('name'),
     email: formData.get('email'),
     password: formData.get('password'),
+    organizationName: formData.get('organizationName'),
   });
 
   if (!validatedFields.success) {
@@ -27,13 +28,16 @@ export async function signup(
     };
   }
 
-  const { name, email, password } = validatedFields.data;
+  const { name, email, password, organizationName } = validatedFields.data;
 
   const response = await apiFetcher('/api/auth/signup', 'POST', {
     name,
     email,
     password,
+    organizationName,
   });
+
+  console.log(response);
 
   if (!response.ok) {
     const status = response.status;

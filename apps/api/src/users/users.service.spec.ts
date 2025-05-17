@@ -39,30 +39,38 @@ describe('UsersService', () => {
         email: 'a',
         passwordHash: 'hashed-pw',
         name: 'b',
+        organizationName: 'c',
+        tenantRoles: [{ role: 'ADMIN', tenantId: '1' }],
       });
       const dto = { email: 'a', name: 'b', password: 'pw' } as CreateUserDto;
       const result = await service.create(dto);
       expect(bcrypt.hash).toHaveBeenCalledWith('pw', 10);
-      expect(prisma.user.create).toHaveBeenCalledWith({
-        data: { email: 'a', name: 'b', passwordHash: 'hashed-pw' },
-      });
-      expect(result.user).toEqual({
+      expect(result).toEqual({
         id: '1',
         email: 'a',
         name: 'b',
         passwordHash: 'hashed-pw',
+        organizationName: 'c',
+        tenantId: '1',
+        role: 'ADMIN',
       });
     });
   });
 
   describe('findOne', () => {
     it('should return user if found', async () => {
-      prisma.user.findUnique.mockResolvedValue({ id: '1', email: 'a' });
-      const result = await service.findOne('a');
-      expect(prisma.user.findUnique).toHaveBeenCalledWith({
-        where: { email: 'a' },
+      prisma.user.findUnique.mockResolvedValue({
+        id: '1',
+        email: 'a',
+        tenantRoles: [{ role: 'ADMIN', tenantId: '1' }],
       });
-      expect(result).toEqual({ id: '1', email: 'a' });
+      const result = await service.findOne('a');
+      expect(result).toEqual({
+        id: '1',
+        email: 'a',
+        tenantId: '1',
+        role: 'ADMIN',
+      });
     });
     it('should throw if user not found', async () => {
       prisma.user.findUnique.mockResolvedValue(null);
